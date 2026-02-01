@@ -1,0 +1,10 @@
+<svg viewBox="0 0 160 55" width="160" height="55" xmlns="http://www.w3.org/2000/svg">
+    <!-- Symbol -->
+    <path fill="#006DDE" transform="scale(1.5) translate(0, 2)" d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z"/>
+
+    <!-- Company Name -->
+    <text x="44" y="34" font-family="Inter, system-ui, -apple-system, sans-serif" font-weight="700" font-size="34" fill="#006DDE">Eludit</text>
+
+    <!-- Slogan -->
+    <text x="9" y="48" font-family="Inter, system-ui, -apple-system, sans-serif" font-weight="400" font-size="9" fill="#006DDE" textLength="125" lengthAdjust="spacing">Intelligent by design</text>
+</svg>

@@ -466,6 +466,7 @@
         .code-tab:hover {
             color: white;
             background: #27272A;
+            border-bottom: 2px solid var(--primary);
         }
 
         .code-tab.active {
@@ -730,10 +731,7 @@
 
 <header>
     <div class="logo">
-        <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
-            <path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z"/>
-        </svg>
-        Eludit
+        <img src="{{ asset('logo-full.svg') }}" alt="Eludit" height="55">
     </div>
     <nav class="nav-links">
         <div class="nav-group">
