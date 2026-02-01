@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solidum - Enterprise Software Solutions</title>
+    <title>Eludit - Enterprise Software Solutions</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -733,7 +733,7 @@
         <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
             <path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z"/>
         </svg>
-        Solidum
+        Eludit
     </div>
     <nav class="nav-links">
         <div class="nav-group">
@@ -1036,8 +1036,8 @@
 <footer>
     <div class="footer-content">
         <div class="footer-brand">
-            <div class="logo">Solidum</div>
-            <p>Solidum - Delivering robust software solutions since 2012. Copyright © 2026 Solidum Inc.</p>
+            <div class="logo">Eludit</div>
+            <p>Eludit - Delivering robust software solutions since 2012. Copyright © 2026 Eludit Inc.</p>
         </div>
         <div class="footer-col">
             <h4>Company</h4>
