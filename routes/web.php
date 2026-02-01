@@ -16,7 +16,7 @@ Route::post('/contact', function (Request $request) {
         'marketing' => 'nullable'
     ]);
 
-    Mail::to('addnnann5@gmail.com')->send(new ContactFormMail($validated));
+    Mail::to('info@eludit.com')->send(new ContactFormMail($validated));
 
     return back()->with('success', 'Thank you for your message! We will get back to you soon.');
 })->name('contact.submit');
