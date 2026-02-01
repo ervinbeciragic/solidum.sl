@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solidum - Enterprise Software Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Original Red Theme */
+            /*
+            --primary: #FF2D20;
+            --primary-dark: #D61F15;
+            --primary-light: #FEF2F2;
+            */
+
+            /* Blue Theme */
+            --primary: #006DDE;
+            --primary-dark: #0056b3;
+            --primary-light: #E6F0FB;
+
+            --text-main: #1F2937;
+            --text-muted: #4B5563;
+            --bg-light: #F3F4F6;
+            --white: #FFFFFF;
+            --line-color: #E5E7EB;
+            --line-color-dark: #27272A; /* Darker line for dark sections */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: var(--text-main);
+            line-height: 1.5;
+            background-color: #fff;
+            -webkit-font-smoothing: antialiased;
+            position: relative; /* For layout lines positioning */
+            background-image:
+                radial-gradient(circle at 50% 0%, rgba(0, 109, 222, 0.05) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(0, 109, 222, 0.01) 0px, rgba(0, 109, 222, 0.01) 1px, transparent 1px, transparent 30px);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Layout Lines */
+        .layout-lines {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 1400px;
+            height: 100%;
+            border-left: 1px solid var(--line-color);
+            border-right: 1px solid var(--line-color);
+            pointer-events: none;
+            z-index: 40; /* Above backgrounds, below interactive elements */
+        }
+
+        .layout-lines.dark-mode {
+            border-left: 1px solid var(--line-color-dark);
+            border-right: 1px solid var(--line-color-dark);
+            z-index: 1; /* Inside the section */
+        }
+
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background-color: var(--line-color);
+            position: relative;
+            z-index: 40;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 50;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 110; /* Ensure logo is above mega menu bridge */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            align-items: center;
+        }
+
+        .nav-links > a {
+            position: relative;
+            z-index: 110; /* Ensure simple links are above mega menu bridge */
+        }
+
+        .nav-links > a:hover {
+            color: var(--primary);
+        }
+
+        /* Mega Menu Styles */
+        .nav-group {
+            /* position: relative; Removed to allow centering relative to header */
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-group > a {
+            cursor: pointer;
+            padding: 1rem 0;
+            position: relative;
+            z-index: 110; /* Ensure nav group links are above mega menu bridge */
+        }
+
+        .nav-group:hover > a {
+            color: var(--primary);
+        }
+
+        .mega-menu {
+            display: none;
+            position: absolute;
+            /* Position closer to the text to bridge the gap */
+            top: calc(100% - 1.5rem);
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            width: 800px;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border: 1px solid #F3F4F6;
+            z-index: 100;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: -20px; /* Pull menu up to bridge the gap */
+            padding-top: 2rem; /* Add padding to compensate for the pull up */
+        }
+
+        /* Invisible bridge to prevent hover loss */
+        .mega-menu::before {
+            content: '';
+            position: absolute;
+            top: -40px; /* Extend upwards to overlap with the nav link */
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: transparent;
+            z-index: 105; /* Bridge is below links (110) but above other content */
+        }
+
+        .nav-group:hover .mega-menu {
+            display: grid;
+        }
+
+        .mega-col h4 {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .mega-col ul {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .mega-col a {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        .mega-col a:hover {
+            color: var(--text-main);
+        }
+
+        /* Services Mega Menu Specifics */
+        .services-menu {
+            width: 1300px; /* Wider for 5 columns, almost full layout width */
+            grid-template-columns: repeat(5, 1fr); /* 5 columns layout */
+            gap: 1.5rem;
+            padding: 2rem;
+            padding-top: 2rem; /* Ensure padding is consistent */
+        }
+
+        .service-item {
+            display: flex;
+            flex-direction: column; /* Vertical layout */
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            transition: background-color 0.2s;
+            height: 100%;
+        }
+
+        .service-item:hover {
+            background-color: var(--bg-light);
+        }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-content h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .service-content p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .search-icon {
+            cursor: pointer;
+            position: relative;
+            z-index: 110; /* Ensure search icon is above mega menu bridge */
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 6rem 1rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background-color: #E5E7EB;
+        }
+
+        /* Services Grid */
+        .services-section {
+            background-color: transparent; /* Changed from #FAFAFA to allow body bg to show */
+            padding: 5rem 2rem;
+            border-top: 1px solid var(--line-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+            border: 1px solid #F3F4F6;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Code Preview Section */
+        .code-section {
+            padding: 5rem 2rem;
+            background: #18181B;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            z-index: 45; /* Sit above global layout lines to mask them */
+        }
+
+        .code-container {
+            max-width: 1200px; /* Increased from 1000px to allow more space */
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            position: relative;
+            z-index: 2; /* Content above lines */
+        }
+
+        .code-text h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .code-text p {
+            color: #A1A1AA;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 400px;
+        }
+
+        .code-window {
+            background: #27272A;
+            border-radius: 0.75rem;
+            padding: 0; /* Removed padding to accommodate header */
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.85rem; /* Reduced from 0.9rem */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px; /* Increased from 500px */
+            border: 1px solid #3F3F46;
+            overflow: hidden; /* Ensure content doesn't spill out */
+        }
+
+        .code-header {
+            display: flex;
+            background: #1F1F22;
+            border-bottom: 1px solid #3F3F46;
+        }
+
+        .code-tab {
+            padding: 0.75rem 1.5rem;
+            color: #A1A1AA;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-right: 1px solid #3F3F46;
+            transition: all 0.2s;
+            background: transparent;
+            border-top: none;
+            border-left: none;
+            border-bottom: none;
+            font-family: inherit;
+        }
+
+        .code-tab:hover {
+            color: white;
+            background: #27272A;
+        }
+
+        .code-tab.active {
+            color: white;
+            background: #27272A;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .code-content {
+            padding: 1.5rem;
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .code-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .code-line {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .keyword { color: #C084FC; }
+        .function { color: #60A5FA; }
+        .string { color: #86EFAC; }
+        .arrow { color: #F472B6; }
+        .comment { color: #6B7280; font-style: italic; }
+
+        /* Tech Stack Section */
+        .tech-stack-section {
+            padding: 5rem 2rem;
+            background: transparent; /* Changed from white to allow body bg to show */
+            border-top: 1px solid var(--line-color);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .tech-category h4 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .tech-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .tech-item {
+            font-weight: 500;
+            color: var(--text-main);
+            padding: 0.5rem;
+            background: var(--bg-light);
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 5rem 2rem;
+            background-color: transparent; /* Changed from #FAFAFA to allow body bg to show */
+            border-top: 1px solid var(--line-color);
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-content p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #F3F4F6;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-checkbox input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 0.25rem;
+            border: 1px solid #E5E7EB;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .form-checkbox label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        /* Scroll Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--line-color);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-col h4 {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-col a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-col a:hover {
+            color: var(--primary);
+        }
+
+        /* Cookie Banner */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #F3F4F6;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .cookie-banner.show {
+            transform: translateY(0);
+        }
+
+        .cookie-content {
+            max-width: 800px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .cookie-content strong {
+            color: var(--text-main);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .cookie-content a {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            header { padding: 1.5rem; flex-direction: column; gap: 1rem; }
+            .nav-links { display: none; } /* Simplified for mobile */
+            .code-container { flex-direction: column; }
+            .footer-content { grid-template-columns: 1fr; }
+            .cookie-banner { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .contact-wrapper { grid-template-columns: 1fr; gap: 2rem; }
+            .contact-content { text-align: center; }
+            .contact-content .section-title { text-align: center !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="layout-lines"></div>
+
+<header>
+    <div class="logo">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+            <path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z"/>
+        </svg>
+        Solidum
+    </div>
+    <nav class="nav-links">
+        <div class="nav-group">
+            <a href="#">Services</a>
+            <div class="mega-menu services-menu">
+                <a href="#" class="service-item">
+                    <div class="service-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    </div>
+                    <div class="service-content">
+                        <h5>Enterprise Web Apps</h5>
+                        <p>High-performance solutions for Fintech & Public Sector.</p>
+                    </div>
+                </a>
+                <a href="#" class="service-item">
+                    <div class="service-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    </div>
+                    <div class="service-content">
+                        <h5>E-Commerce & Integration</h5>
+                        <p>Magento 2 development and complex ERP/CRM integrations.</p>
+                    </div>
+                </a>
+                <a href="#" class="service-item">
+                    <div class="service-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    </div>
+                    <div class="service-content">
+                        <h5>Cloud & Architecture</h5>
+                        <p>Microservices, Docker, and scalable cloud infrastructure.</p>
+                    </div>
+                </a>
+                <a href="#" class="service-item">
+                    <div class="service-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                    </div>
+                    <div class="service-content">
+                        <h5>Marketing Websites</h5>
+                        <p>Engaging, high-conversion websites for your brand.</p>
+                    </div>
+                </a>
+                <a href="#" class="service-item">
+                    <div class="service-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <div class="service-content">
+                        <h5>Mobile App Development</h5>
+                        <p>Native and cross-platform mobile applications for iOS and Android.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="nav-group">
+            <a href="#">Tech Stack</a>
+            <div class="mega-menu">
+                <div class="mega-col">
+                    <h4>Backend</h4>
+                    <ul>
+                        <li><a href="#">PHP (Laravel)</a></li>
+                        <li><a href="#">PHP (Symfony)</a></li>
+                        <li><a href="#">Java (Spring Boot)</a></li>
+                        <li><a href="#">C#</a></li>
+                        <li><a href="#">Node.js</a></li>
+                    </ul>
+                </div>
+                <div class="mega-col">
+                    <h4>Frontend</h4>
+                    <ul>
+                        <li><a href="#">Vue.js</a></li>
+                        <li><a href="#">React.js</a></li>
+                        <li><a href="#">JavaScript (ES6+)</a></li>
+                        <li><a href="#">Bootstrap / Tailwind</a></li>
+                    </ul>
+                </div>
+                <div class="mega-col">
+                    <h4>Database</h4>
+                    <ul>
+                        <li><a href="#">MySQL</a></li>
+                        <li><a href="#">PostgreSQL</a></li>
+                        <li><a href="#">SQLite</a></li>
+                        <li><a href="#">Redis</a></li>
+                    </ul>
+                </div>
+                <div class="mega-col">
+                    <h4>DevOps</h4>
+                    <ul>
+                        <li><a href="#">Docker / Swarm</a></li>
+                        <li><a href="#">Azure / DigitalOcean</a></li>
+                        <li><a href="#">CI/CD (Git)</a></li>
+                        <li><a href="#">Ansible</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <a href="#">Case Studies</a>
+        <a href="#">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <div class="search-icon">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+    </div>
+</header>
+
+<div class="section-divider"></div>
+
+<section class="hero">
+    <h1>Architecting Digital<br><span>Excellence</span></h1>
+    <p>Premium Software Engineering & Digital Transformation. We transform complex business processes into elegant, scalable software solutions using proven methodologies.</p>
+    <div class="cta-buttons">
+        <a href="#contact" class="btn btn-primary">Discuss Your Project</a>
+        <a href="#" class="btn btn-secondary">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20" style="margin-right: 5px;">
+                <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+            </svg>
+            View Portfolio
+        </a>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<section class="code-section">
+    <div class="layout-lines dark-mode"></div>
+    <div class="code-container">
+        <div class="code-text">
+            <h2>Clean Code.<br>Solid Architecture.</h2>
+            <p>We apply Domain-Driven Design (DDD) and Test-Driven Development (TDD) to ensure your software is robust, maintainable, and scalable.</p>
+            <a href="#" class="btn btn-primary">Our Methodology</a>
+        </div>
+        <div class="code-window">
+            <div class="code-header">
+                <button class="code-tab active" data-lang="php">PHP</button>
+                <button class="code-tab" data-lang="csharp">C#</button>
+                <button class="code-tab" data-lang="java">Java</button>
+                <button class="code-tab" data-lang="js">JavaScript</button>
+            </div>
+
+            <div id="code-php" class="code-content active">
+                <div class="code-line"><span class="keyword">class</span> <span class="function">LoanApprovalService</span></div>
+                <div class="code-line">{</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span class="function">process</span>(<span class="function">Application</span> <span class="arrow">$app</span>)</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> (<span class="arrow">$this</span>-><span class="function">riskAnalyzer</span>-><span class="function">evaluate</span>(<span class="arrow">$app</span>)) {</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="function">LoanStatus</span>::<span class="function">APPROVED</span>;</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">throw new</span> <span class="function">HighRiskException</span>();</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div class="code-line">}</div>
+            </div>
+
+            <div id="code-csharp" class="code-content">
+                <div class="code-line"><span class="keyword">public class</span> <span class="function">LoanApprovalService</span></div>
+                <div class="code-line">{</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span> <span class="function">LoanStatus</span> <span class="function">Process</span>(<span class="function">Application</span> <span class="arrow">app</span>)</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;{</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> (<span class="arrow">_riskAnalyzer</span>.<span class="function">Evaluate</span>(<span class="arrow">app</span>)) {</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="function">LoanStatus</span>.<span class="function">Approved</span>;</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">throw new</span> <span class="function">HighRiskException</span>();</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div class="code-line">}</div>
+            </div>
+
+            <div id="code-java" class="code-content">
+                <div class="code-line"><span class="keyword">public class</span> <span class="function">LoanApprovalService</span> {</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span> <span class="function">LoanStatus</span> <span class="function">process</span>(<span class="function">Application</span> <span class="arrow">app</span>) {</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> (<span class="arrow">this</span>.<span class="function">riskAnalyzer</span>.<span class="function">evaluate</span>(<span class="arrow">app</span>)) {</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="function">LoanStatus</span>.<span class="function">APPROVED</span>;</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">throw new</span> <span class="function">HighRiskException</span>();</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div class="code-line">}</div>
+            </div>
+
+            <div id="code-js" class="code-content">
+                <div class="code-line"><span class="keyword">class</span> <span class="function">LoanApprovalService</span> {</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">async</span> <span class="function">process</span>(<span class="arrow">app</span>) {</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">const</span> <span class="arrow">isSafe</span> = <span class="keyword">await</span> <span class="arrow">this</span>.<span class="function">riskAnalyzer</span>.<span class="function">evaluate</span>(<span class="arrow">app</span>);</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span> (<span class="arrow">isSafe</span>) {</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="function">LoanStatus</span>.<span class="function">APPROVED</span>;</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">throw new</span> <span class="function">HighRiskException</span>();</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                <div class="code-line">}</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="services-section">
+    <div class="container">
+        <h2 class="section-title">Our Expertise</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="card-icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                </div>
+                <h3>Enterprise Web Apps</h3>
+                <p>Custom solutions for Fintech, Public Sector, and Media. We build high-performance applications using Laravel, Java Spring, and Vue.js.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                </div>
+                <h3>E-Commerce & Integration</h3>
+                <p>Magento 2 architecture and custom module development. Seamless integration with ERPs (MS Dynamics NAV) and CRMs (Salesforce).</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                </div>
+                <h3>Cloud & Architecture</h3>
+                <p>Modernizing legacy systems with Microservices and Docker. We design scalable infrastructure on Azure and DigitalOcean.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="tech-stack-section">
+    <div class="container">
+        <h2 class="section-title">Technology Stack</h2>
+        <div class="tech-grid">
+            <div class="tech-category">
+                <h4>Backend</h4>
+                <div class="tech-list">
+                    <div class="tech-item">PHP (Laravel)</div>
+                    <div class="tech-item">PHP (Symfony)</div>
+                    <div class="tech-item">Java (Spring Boot)</div>
+                    <div class="tech-item">C#</div>
+                    <div class="tech-item">Node.js</div>
+                </div>
+            </div>
+            <div class="tech-category">
+                <h4>Frontend</h4>
+                <div class="tech-list">
+                    <div class="tech-item">Vue.js</div>
+                    <div class="tech-item">React.js</div>
+                    <div class="tech-item">JavaScript (ES6+)</div>
+                    <div class="tech-item">Bootstrap / Tailwind</div>
+                </div>
+            </div>
+            <div class="tech-category">
+                <h4>Database</h4>
+                <div class="tech-list">
+                    <div class="tech-item">MySQL</div>
+                    <div class="tech-item">PostgreSQL</div>
+                    <div class="tech-item">SQLite</div>
+                    <div class="tech-item">Redis</div>
+                </div>
+            </div>
+            <div class="tech-category">
+                <h4>DevOps & Tools</h4>
+                <div class="tech-list">
+                    <div class="tech-item">Docker / Swarm</div>
+                    <div class="tech-item">Azure / DigitalOcean</div>
+                    <div class="tech-item">CI/CD (Git)</div>
+                    <div class="tech-item">Ansible</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="contact-section">
+    <div class="container">
+        <div class="contact-wrapper">
+            <div class="contact-content animate-on-scroll">
+                <h2 class="section-title" style="text-align: left; margin-bottom: 1rem;">Let's Build Something Amazing</h2>
+                <p>Ready to start your next project? Get in touch with us and let's discuss how we can help you achieve your goals.</p>
+            </div>
+            <form action="{{ route('contact.submit') }}" method="POST" class="contact-form animate-on-scroll" style="transition-delay: 0.2s;">
+                @csrf
+                @if(session('success'))
+                    <div style="background-color: #d1fae5; color: #065f46; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem;">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="you@company.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Tell us about your project..." required></textarea>
+                </div>
+                <div class="form-checkbox">
+                    <input type="checkbox" id="marketing" name="marketing">
+                    <label for="marketing">I agree to receive marketing messages</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <div class="logo">Solidum</div>
+            <p>Solidum - Delivering robust software solutions since 2012. Copyright © 2026 Solidum Inc.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Methodology</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Services</h4>
+            <ul>
+                <li><a href="#">Web Development</a></li>
+                <li><a href="#">E-Commerce</a></li>
+                <li><a href="#">System Integration</a></li>
+                <li><a href="#">Consulting</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Connect</h4>
+            <ul>
+                <li><a href="#">LinkedIn</a></li>
+                <li><a href="#">GitHub</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Email</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<div id="cookie-banner" class="cookie-banner">
+    <div class="cookie-content">
+        <p><strong>This website uses cookies</strong><br>
+            Cookies are small pieces of text that your web browser sends to the website you visit. A cookie file is stored in your web browser and allows us to recognize you and remember your preferences. By clicking Accept, you agree to our use of cookies. <a href="#">Read more</a></p>
+    </div>
+    <button id="accept-cookies" class="btn btn-primary">Accept</button>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cookie Banner Logic
+        const banner = document.getElementById('cookie-banner');
+        const acceptBtn = document.getElementById('accept-cookies');
+
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                banner.classList.add('show');
+            }, 1000);
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            banner.classList.remove('show');
+        });
+
+        // Scroll Animation Logic
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach((element) => {
+            observer.observe(element);
+        });
+
+        // Code Tabs Logic
+        const tabs = document.querySelectorAll('.code-tab');
+        const contents = document.querySelectorAll('.code-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+
+                // Add active class to clicked tab
+                tab.classList.add('active');
+
+                // Show corresponding content
+                const lang = tab.getAttribute('data-lang');
+                document.getElementById(`code-${lang}`).classList.add('active');
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
