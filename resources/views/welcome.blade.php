@@ -269,10 +269,46 @@
 
         /* Hero Section */
         .hero {
-            text-align: center;
-            padding: 6rem 1rem;
-            max-width: 1000px;
+            padding: 6rem 1.25rem 5rem;
+            max-width: 1320px;
             margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: clamp(1.5rem, 3vw, 3.5rem);
+            align-items: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 560px;
+            text-align: left;
+        }
+
+        .hero-art {
+            position: relative;
+            z-index: 2;
+            width: min(100%, 640px);
+            margin-inline: auto;
+            padding: 0.75rem;
+            border-radius: 1.25rem;
+            background: #fff;
+            border: 1px solid #E5E7EB;
+            box-shadow: 0 22px 44px -26px rgba(0, 0, 0, 0.35);
+        }
+
+        .hero-art img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0.9rem;
+            background: #fff;
+            object-fit: contain;
+            max-height: min(64vh, 520px);
+            box-shadow: inset 0 0 0 1px rgba(229, 231, 235, 0.7);
         }
 
         .hero h1 {
@@ -291,7 +327,7 @@
             font-size: 1.25rem;
             color: var(--text-muted);
             max-width: 700px;
-            margin: 0 auto 3rem;
+            margin: 0 0 3rem;
             line-height: 1.6;
         }
 
@@ -569,6 +605,25 @@
             border: 1px solid #F3F4F6;
         }
 
+        .contact-details {
+            margin-top: 1.5rem;
+        }
+
+        .contact-detail {
+            margin-top: 0.65rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .contact-detail a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .contact-detail a:hover {
+            text-decoration: underline;
+        }
+
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -713,7 +768,27 @@
         }
 
         @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+                padding: 4.5rem 1rem 3.5rem;
+            }
+
+            .hero-content {
+                max-width: none;
+                text-align: center;
+                margin: 0 auto;
+            }
+
             .hero h1 { font-size: 3rem; }
+
+            .hero-art {
+                width: min(100%, 640px);
+                margin-inline: auto;
+            }
+
+            .hero-art img { max-height: 58vh; }
             header { padding: 1.5rem; flex-direction: column; gap: 1rem; }
             .nav-links { display: none; } /* Simplified for mobile */
             .code-container { flex-direction: column; }
@@ -723,6 +798,7 @@
             .contact-content { text-align: center; }
             .contact-content .section-title { text-align: center !important; }
         }
+
     </style>
 </head>
 <body>
@@ -842,17 +918,23 @@
 <div class="section-divider"></div>
 
 <section class="hero">
-    <h1>Architecting Digital<br><span>Excellence</span></h1>
-    <p>Premium Software Engineering & Digital Transformation. We transform complex business processes into elegant, scalable software solutions using proven methodologies.</p>
-    <div class="cta-buttons">
-        <a href="#contact" class="btn btn-primary">Discuss Your Project</a>
-        <a href="#" class="btn btn-secondary">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20" style="margin-right: 5px;">
-                <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
-            </svg>
-            View Portfolio
-        </a>
+    <div class="hero-content">
+        <h1>Architecting Digital<br><span>Excellence</span></h1>
+        <p>Premium Software Engineering &amp; Digital Transformation. We transform complex business processes into elegant, scalable software solutions using proven methodologies.</p>
+        <div class="cta-buttons">
+            <a href="#contact" class="btn btn-primary">Discuss Your Project</a>
+            <a href="#" class="btn btn-secondary">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20" style="margin-right: 5px;">
+                    <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+                </svg>
+                View Portfolio
+            </a>
+        </div>
     </div>
+
+    <figure class="hero-art" aria-label="Homepage screenshot preview">
+        <img src="{{ asset('images/Screenshot_2.png') }}" alt="Eludit homepage screenshot preview" loading="eager" decoding="async">
+    </figure>
 </section>
 
 <div class="section-divider"></div>
@@ -1005,6 +1087,10 @@
             <div class="contact-content animate-on-scroll">
                 <h2 class="section-title" style="text-align: left; margin-bottom: 1rem;">Let's Build Something Amazing</h2>
                 <p>Ready to start your next project? Get in touch with us and let's discuss how we can help you achieve your goals.</p>
+                <div class="contact-details">
+                    <p class="contact-detail"><strong>Email:</strong> <a href="mailto:info@eludit.com">info@eludit.com</a></p>
+                    <p class="contact-detail"><strong>Contact:</strong> <a href="tel:+38669878149">+38669878149</a></p>
+                </div>
             </div>
             <form action="{{ route('contact.submit') }}" method="POST" class="contact-form animate-on-scroll" style="transition-delay: 0.2s;">
                 @csrf
